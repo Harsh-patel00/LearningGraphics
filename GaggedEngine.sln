@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RTI1W", "RTI1W\RTI1W.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PardCodeSeries", "PardCodeSeries\PardCodeSeries.vcxproj", "{E54008D2-5FF5-43E0-91E9-5C1F879F9B69}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearnOpenGL", "LearnOpenGL\LearnOpenGL.vcxproj", "{F6B491F9-F024-4762-ABAF-75E9095F5F2A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{E54008D2-5FF5-43E0-91E9-5C1F879F9B69}.Release|x64.Build.0 = Release|x64
 		{E54008D2-5FF5-43E0-91E9-5C1F879F9B69}.Release|x86.ActiveCfg = Release|Win32
 		{E54008D2-5FF5-43E0-91E9-5C1F879F9B69}.Release|x86.Build.0 = Release|Win32
+		{F6B491F9-F024-4762-ABAF-75E9095F5F2A}.Debug|x64.ActiveCfg = Debug|x64
+		{F6B491F9-F024-4762-ABAF-75E9095F5F2A}.Debug|x64.Build.0 = Debug|x64
+		{F6B491F9-F024-4762-ABAF-75E9095F5F2A}.Debug|x86.ActiveCfg = Debug|Win32
+		{F6B491F9-F024-4762-ABAF-75E9095F5F2A}.Debug|x86.Build.0 = Debug|Win32
+		{F6B491F9-F024-4762-ABAF-75E9095F5F2A}.Release|x64.ActiveCfg = Release|x64
+		{F6B491F9-F024-4762-ABAF-75E9095F5F2A}.Release|x64.Build.0 = Release|x64
+		{F6B491F9-F024-4762-ABAF-75E9095F5F2A}.Release|x86.ActiveCfg = Release|Win32
+		{F6B491F9-F024-4762-ABAF-75E9095F5F2A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

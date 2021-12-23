@@ -1,6 +1,8 @@
 #include <assert.h>
+#include <corecrt_wstdio.h>
 
 #include "GEngine/Window/GWindow.h"
+#include "GEngine/Console/GConsole.h"
 #include "glad/glad_wgl.h"
 #include "glad/glad.h"
 
@@ -9,21 +11,38 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
-	case WM_DESTROY:
-	{
-		// Get the reference of the window that is currently being processed
-		GWindow* window = (GWindow*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
-		break;
-	}
-	case WM_CLOSE:
-	{
-		// Send a message on quitting (This message will be received by GGame)
-		PostQuitMessage(0);
-		break;
-	}
+		// Sent when a window is being destroyed. 
+		// It is sent to the window procedure of the window being destroyed after the window is removed from the screen.
+		case WM_DESTROY:
+		{
 
-	default:
-		return DefWindowProc(hWnd, msg, wParam, lParam);
+			// Get the reference of the window that is currently being processed
+			// GWindow* window = (GWindow*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
+			break;
+		}
+		case WM_CLOSE:
+		{
+			// Indicates to the system that a thread has made a request to terminate(quit).
+			// It is typically used in response to a WM_DESTROY message
+			PostQuitMessage(0);
+			break;
+		}
+		case WM_KEYDOWN:
+
+			switch (wParam)
+			{
+				// Check if Esc key is pressed, if so then close the window
+				case VK_ESCAPE:
+					GConsole::LOG("GWindow::LOG::Closing window...");
+					PostQuitMessage(0);
+					break;
+				default:
+					GConsole::KEYLOG((CHAR)wParam);
+					break;
+			}
+
+		default:
+			return DefWindowProc(hWnd, msg, wParam, lParam);
 	}
 
 	return NULL;
@@ -31,6 +50,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 GWindow::GWindow()
 {
+	#pragma region Create and Show Window
+
 	// Class related to specific window properties
 	WNDCLASSEX wc = {};
 
@@ -69,8 +90,9 @@ GWindow::GWindow()
 	ShowWindow((HWND)_handle, SW_SHOW);
 	UpdateWindow((HWND)_handle);
 
+	#pragma endregion
 
-	// Create OpenGL render context
+	#pragma region Create OpenGL render context
 	auto hDC = GetDC(HWND(_handle));
 
 	int pixelFormatAttributes[] = 
@@ -106,21 +128,33 @@ GWindow::GWindow()
 	_context = wglCreateContextAttribsARB(hDC, 0, openGLAttributes);
 	assert(_context);
 
+	#pragma endregion
 }
 
 GWindow::~GWindow()
 {
 	wglDeleteContext((HGLRC)_context);
-	DestroyWindow((HWND)_handle);
+	// DestroyWindow((HWND)_handle);
 }
 
+// Set our created window as current context
 void GWindow::MakeCurrentContext()
 {
 	wglMakeCurrent(GetDC(HWND(_handle)), (HGLRC)_context);
 }
 
+// Swap buffers to smoothly draw on window
 void GWindow::Present(bool vSync)
 {
 	wglSwapIntervalEXT(vSync);
 	wglSwapLayerBuffers(GetDC(HWND(_handle)), WGL_SWAP_MAIN_PLANE);
+}
+
+GRect GWindow::GetInnerSize()
+{
+	RECT rc{};
+	// This funtion take 'IN' HWND window, and 'OUT'put the rect in 'rc' parameter
+	GetWindowRect((HWND)_handle, &rc);
+
+	return GRect(rc.right-rc.left, rc.bottom-rc.top);
 }

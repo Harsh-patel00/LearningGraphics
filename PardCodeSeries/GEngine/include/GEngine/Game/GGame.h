@@ -1,6 +1,6 @@
 #pragma once
 
-#include <memory>
+#include "GEngine/GPrerequisites.h"
 
 class GWindow;
 class GGraphicsEngine;
@@ -17,6 +17,8 @@ protected:
 	// A pointer to our window class(containing handle to our created window),
 	// which helps creating a new window from our game!
 	std::unique_ptr<GWindow> _display;
+
+	GVertexArrayObjectPtr _triangleVAO{};
 
 public:
 	GGame();

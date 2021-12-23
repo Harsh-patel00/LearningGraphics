@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source\Helper Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stb_image.cpp">
+      <Filter>Source\Helper Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source\Helper Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="glad.c">
+      <Filter>Source\Helper Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source\Helper Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Source\Helper Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Source\Helper Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Shader.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\stb_image.h">
+      <Filter>Headers\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\VertexShader.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\FSContTex.frag">
+      <Filter>Shaders\Texture</Filter>
+    </None>
+    <None Include="Shaders\FSLightObj.frag">
+      <Filter>Shaders\Light</Filter>
+    </None>
+    <None Include="ClassDiagram.cd" />
+    <None Include="Shaders\BorderFrag.frag" />
+    <None Include="Shaders\SimpleFrag.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\SimpleVert.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\FSBag.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\FSDiscard.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\SimpleVert2.vert" />
+    <None Include="Shaders\SimpleFrag2.frag" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{e39d22f9-8ae2-475f-969a-f7594f33dc9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Resources">
+      <UniqueIdentifier>{f06eefaa-7f20-4731-b1bb-8bbefffc6d75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Images">
+      <UniqueIdentifier>{5b6c1c28-f5f1-4902-b205-38b1001378d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{bc69a4d8-6f6b-4feb-9b03-b10ee21cc267}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Helper Source Files">
+      <UniqueIdentifier>{4340f574-00f1-4c8f-a866-4691f8ee7153}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{89918014-9cee-4894-b28a-bd138dc97c8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Light">
+      <UniqueIdentifier>{c52e4084-fe75-49f4-ae2e-5ddd0382e93a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Texture">
+      <UniqueIdentifier>{a2d4d8ef-cbd7-4d7c-bdd8-e61b31d15b33}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\container.jpg">
+      <Filter>Images</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Shaders\FSLightSource.frag">
+      <Filter>Shaders\Light</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="LearnOpenGL.rc" />
+  </ItemGroup>
+</Project>

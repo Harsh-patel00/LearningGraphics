@@ -151,6 +151,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game\Main.cpp" />
+    <ClCompile Include="GEngine\src\GEngine\Console\GConsole.cpp" />
     <ClCompile Include="GEngine\src\GEngine\Game\Win32\CWin32Game.cpp" />
     <ClCompile Include="GEngine\src\GEngine\Graphics\Win32\CWin32GraphicsEngine.cpp" />
     <ClCompile Include="GEngine\src\GEngine\Window\CWin32Window.cpp" />
@@ -159,9 +160,12 @@
     <ClCompile Include="GEngine\vendor\GLAD\src\glad.c" />
     <ClCompile Include="GEngine\vendor\GLAD\src\glad_wgl.c" />
     <ClCompile Include="GEngine\src\GEngine\Math\GVec4.cpp" />
+    <ClCompile Include="GEngine\src\GEngine\Graphics\GVertexArrayObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GEngine\include\GEngine\Console\GConsole.h" />
     <ClInclude Include="GEngine\include\GEngine\GPrerequisites.h" />
+    <ClInclude Include="GEngine\include\GEngine\Math\GRect.h" />
     <ClInclude Include="GEngine\include\GEngine\Window\GWindow.h" />
     <ClInclude Include="GEngine\include\GEngine\Game\GGame.h" />
     <ClInclude Include="GEngine\include\GEngine\Graphics\GGraphicsEngine.h" />
@@ -169,6 +173,7 @@
     <ClInclude Include="GEngine\vendor\GLAD\include\glad\glad_wgl.h" />
     <ClInclude Include="GEngine\vendor\GLAD\include\KHR\khrplatform.h" />
     <ClInclude Include="GEngine\include\GEngine\Math\GVec4.h" />
+    <ClInclude Include="GEngine\include\GEngine\Graphics\GVertexArrayObject.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

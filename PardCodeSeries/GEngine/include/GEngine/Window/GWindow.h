@@ -2,6 +2,8 @@
 
 #include <Windows.h>
 
+#include "GEngine/Math/GRect.h"
+
 class GWindow
 {
 private:
@@ -21,6 +23,7 @@ public:
 public:
 	void MakeCurrentContext();
 	void Present(bool vSync);
+	GRect GetInnerSize();
 
 };
 

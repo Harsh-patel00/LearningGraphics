@@ -1,6 +1,5 @@
-#include <iostream>
-
 #include "GEngine/Game/GGame.h"
+#include "GEngine/Console/GConsole.h"
 
 int main()
 {
@@ -11,7 +10,7 @@ int main()
 	}
 	catch (const std::exception& e)
 	{
-		std::cout << e.what() << '\n';
+		GConsole::LOGERROR(e.what());
 		return 1;
 	}
 

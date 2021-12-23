@@ -1,0 +1,10 @@
+# CMake generation dependency list for this directory.
+C:/Users/hp987/source/repos/GaggedEngine/LearnOpenGL/Resources/assimp-5.0.1/contrib/zlib/CMakeLists.txt
+C:/Users/hp987/source/repos/GaggedEngine/LearnOpenGL/Resources/assimp-5.0.1/contrib/zlib/zconf.h.cmakein
+C:/Users/hp987/source/repos/GaggedEngine/LearnOpenGL/Resources/assimp-5.0.1/contrib/zlib/zlib.pc.cmakein
+G:/Cmake/share/cmake-3.22/Modules/CheckCSourceCompiles.cmake
+G:/Cmake/share/cmake-3.22/Modules/CheckFunctionExists.cmake
+G:/Cmake/share/cmake-3.22/Modules/CheckIncludeFile.cmake
+G:/Cmake/share/cmake-3.22/Modules/CheckIncludeFileCXX.cmake
+G:/Cmake/share/cmake-3.22/Modules/CheckTypeSize.cmake
+G:/Cmake/share/cmake-3.22/Modules/Internal/CheckSourceCompiles.cmake
