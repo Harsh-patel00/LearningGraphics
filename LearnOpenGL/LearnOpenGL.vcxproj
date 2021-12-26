@@ -182,6 +182,7 @@
     <None Include="Shaders\BorderFrag.frag" />
     <None Include="Shaders\FSBag.frag" />
     <None Include="Shaders\FSContTex.frag" />
+    <None Include="Shaders\FSCubemap.frag" />
     <None Include="Shaders\FSDiscard.frag" />
     <None Include="Shaders\FSFont.frag" />
     <None Include="Shaders\FSLightObj.frag" />
@@ -190,6 +191,7 @@
     <None Include="Shaders\SimpleVert.vert" />
     <None Include="Shaders\SimpleVert2.vert" />
     <None Include="Shaders\VertexShader.vert" />
+    <None Include="Shaders\VSCubemap.vert" />
     <None Include="Shaders\VSFont.vert" />
   </ItemGroup>
   <ItemGroup>

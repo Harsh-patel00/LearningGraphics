@@ -87,6 +87,8 @@
     </None>
     <None Include="Shaders\VSFont.vert" />
     <None Include="Shaders\FSFont.frag" />
+    <None Include="Shaders\FSCubemap.frag" />
+    <None Include="Shaders\VSCubemap.vert" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Headers">

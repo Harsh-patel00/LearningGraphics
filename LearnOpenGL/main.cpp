@@ -163,6 +163,43 @@ void RenderText(Shader& shader, std::string text, float x, float y, float scale,
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
+unsigned int LoadCubemap(std::vector<std::string> faces)
+{
+	unsigned int textureID;
+	glGenTextures(1, &textureID);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+
+	stbi_set_flip_vertically_on_load(false);
+
+	int width, height, nrChannels;
+	
+	for (unsigned int i = 0; i < faces.size(); i++)
+	{
+		unsigned char* data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
+		if (data)
+		{
+			glTexImage2D(
+				GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+				0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data
+			);
+			stbi_image_free(data);
+		}
+		else
+		{
+			std::cout << "Cubemap tex failed to load at path: " << faces[i] << std::endl;
+			stbi_image_free(data);
+		}
+	}
+
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+	return textureID;
+}
+
 int main()
 {
 	#pragma region Initialization of GLFW and GLAD
@@ -226,10 +263,16 @@ int main()
 	
 	const char *fontVS		= "./Shaders/VSFont.vert";
 	const char *fontFS		= "./Shaders/FSFont.frag";
+	
+	const char *cubemapVS		= "./Shaders/VSCubemap.vert";
+	const char * cubemapFS		= "./Shaders/FSCubemap.frag";
 
 	Shader textureShader(simpleVert, simpleFrag);	// For object using textures
 	Shader framebufferShader(simpleVS2, simpleFS2); // For framebuffer textures
+	Shader cubemapShader(cubemapVS, cubemapFS);		// For cubemap
+
 	Shader shader(fontVS, fontFS);					// For text
+
 	glm::mat4 fontProjection = ourCamera.SetProjection(CameraType::ORTHGRAPHIC, static_cast<float>(WINDOW_WIDTH), static_cast<float>(WINDOW_HEIGHT), 0, 0);
 	shader.Use();
 	shader.SetMatrixUniform4f("fontProjection", glm::value_ptr(fontProjection));
@@ -243,6 +286,18 @@ int main()
 
 	Texture tex1(tex1Source, GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_NEAREST, GL_LINEAR);
 	Texture tex2(tex2Source, GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_NEAREST, GL_LINEAR);
+
+	std::vector<std::string> textures_faces
+	{
+		"./Resources/skybox/right.jpg",
+		"./Resources/skybox/left.jpg",
+		"./Resources/skybox/top.jpg",
+		"./Resources/skybox/bottom.jpg",
+		"./Resources/skybox/front.jpg",
+		"./Resources/skybox/back.jpg",
+	};
+
+	unsigned int cubemapTexture = LoadCubemap(textures_faces);
 
 	#pragma endregion
 
@@ -403,6 +458,51 @@ int main()
 		-.25f, -.25f,  1.0f, 1.0f
 	};
 
+	float skyboxVertices[] = {
+		// positions          
+		-1.0f,  1.0f, -1.0f,
+		-1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+
+		-1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+
+		 1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+
+		-1.0f, -1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+
+		-1.0f,  1.0f, -1.0f,
+		 1.0f,  1.0f, -1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f, -1.0f,
+
+		-1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		 1.0f, -1.0f,  1.0f
+	};
+
 	#pragma endregion
 
 	#pragma region VAOs & VBOs & FBOs
@@ -482,9 +582,7 @@ int main()
 	// Unbind the framebuffer
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-
 	// Quad for fonts
-
 	glGenVertexArrays(1, &fontVAO);
 	glGenBuffers(1, &fontVBO);
 	glBindVertexArray(fontVAO);
@@ -494,6 +592,16 @@ int main()
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+
+	// Skybox VAO
+	unsigned int skyboxVAO, skyboxVBO;
+	glGenVertexArrays(1, &skyboxVAO);
+	glGenBuffers(1, &skyboxVBO);
+	glBindVertexArray(skyboxVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
 	#pragma endregion
 
@@ -530,32 +638,33 @@ int main()
 
 		// Set the view matrix (Need to set this every frame as we are moving the camera around)
 		glm::mat4 view;
-		view = ourCamera.LookAt();
 
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(0.f));
 
-		#pragma region Cube and Plane
+		view = glm::mat4(glm::mat3(ourCamera.LookAt()));
 
-		// Plane
-		glBindVertexArray(planeVAO);
+		glDepthMask(GL_FALSE);
+		cubemapShader.Use();
+		// ... set view and projection matrix
+		cubemapShader.SetMatrixUniform4f("view", glm::value_ptr(view));
+		cubemapShader.SetMatrixUniform4f("projection", glm::value_ptr(projection));
 
-		textureShader.Use();
-
-		tex2.Activate();
-
-		textureShader.SetInt("texture1", tex2.textureNumber);
-
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(-0.001f));
-		textureShader.SetMatrixUniform4f("model", glm::value_ptr(model));
-
+		glBindVertexArray(skyboxVAO);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glDepthMask(GL_TRUE);
 
+		view = glm::mat4(1.0f);
+		view = ourCamera.LookAt();
+
+		#pragma region Cubes
 
 		// 1st Cube
 		glBindVertexArray(cubeVAO);
 		
+		textureShader.Use();
+
 		tex1.Activate();
 
 		textureShader.SetInt("texture1", tex1.textureNumber);
@@ -566,12 +675,12 @@ int main()
 
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
-		// Second Cube
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(1.0f, 0.f, 1.5f));
-		textureShader.SetMatrixUniform4f("model", glm::value_ptr(model));
+		//// Second Cube
+		//model = glm::mat4(1.0f);
+		//model = glm::translate(model, glm::vec3(1.0f, 0.f, 1.5f));
+		//textureShader.SetMatrixUniform4f("model", glm::value_ptr(model));
 
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		//glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		textureShader.SetMatrixUniform4f("view", glm::value_ptr(view));
 		textureShader.SetMatrixUniform4f("projection", glm::value_ptr(projection));
