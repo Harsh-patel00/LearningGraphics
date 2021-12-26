@@ -58,7 +58,7 @@ struct Character {
 };
 
 std::map<char, Character> Characters;
-unsigned int VAO, VBO;
+unsigned int fontVAO, fontVBO;
 
 #pragma endregion
 
@@ -118,14 +118,13 @@ void ScrollCallback(GLFWwindow *window, double xoffset, double yoffset)
 }
 
 // render line of text
-// -------------------
 void RenderText(Shader& shader, std::string text, float x, float y, float scale, glm::vec3 color)
 {
 	// activate corresponding render state	
 	shader.Use();
 	shader.SetUniformVec3f("textColor", color);
 	glActiveTexture(GL_TEXTURE0);
-	glBindVertexArray(VAO);
+	glBindVertexArray(fontVAO);
 
 	// iterate through all characters
 	std::string::const_iterator c;
@@ -151,7 +150,7 @@ void RenderText(Shader& shader, std::string text, float x, float y, float scale,
 		// render glyph texture over quad
 		glBindTexture(GL_TEXTURE_2D, ch.TextureID);
 		// update content of VBO memory
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
+		glBindBuffer(GL_ARRAY_BUFFER, fontVBO);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices); // be sure to use glBufferSubData and not glBufferData
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -247,6 +246,8 @@ int main()
 
 	#pragma endregion
 
+	#pragma region Fonts
+
 	FT_Library ft;
 	if (FT_Init_FreeType(&ft))
 	{
@@ -308,6 +309,8 @@ int main()
 
 	FT_Done_Face(face);
 	FT_Done_FreeType(ft);
+
+	#pragma endregion
 
 	#pragma region Vertices
 
@@ -480,12 +483,12 @@ int main()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 
-	// configure VAO/VBO for texture quads
-	// -----------------------------------
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	glBindVertexArray(VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	// Quad for fonts
+
+	glGenVertexArrays(1, &fontVAO);
+	glGenBuffers(1, &fontVBO);
+	glBindVertexArray(fontVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, fontVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
@@ -510,8 +513,6 @@ int main()
 
 		// Set framebuffer on which we want to draw the scene
 		// glBindFramebuffer(GL_FRAMEBUFFER, FBO);
-
-		glEnable(GL_DEPTH_TEST);
 
 		// Rendering commands
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f); // Use this color when clearing color buffer
@@ -644,7 +645,7 @@ int main()
 
 		#pragma endregion
 
-		glBindVertexArray(VAO);
+		glBindVertexArray(fontVAO);
 
 		RenderText(shader, fps, 0.0f, 580.0f, .5f, glm::vec3(1.0, 0.8f, 0.2f));
 
