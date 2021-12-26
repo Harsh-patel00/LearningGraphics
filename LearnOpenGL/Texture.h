@@ -17,6 +17,9 @@ public:
 	// Identify the ith time created texture
 	int textureNumber;
 
+	// Default constructor
+	Texture();
+
 	// Constructor to accept 
 	// 1. imgPath		: Image Path (string)
 	// 2. wrapSType		: Wraping Mode around 's' axis (int/GLint)
@@ -41,6 +44,13 @@ public:
 	// To use texture as a color buffer for framebuffer
 	Texture(GLuint width, GLuint height, GLint filtMinType,	GLint filtMagType);
 
+	void CreateFontTexture(GLuint width, 
+					 GLuint height, 
+					 GLint wrapSType, 
+					 GLint wrapTType, 
+					 GLint filtMinType, 
+					 GLint filtMagType,
+					 const void* data);
 
 	// Use/Activate the texture
 	void Activate();

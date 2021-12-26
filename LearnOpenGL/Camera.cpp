@@ -156,7 +156,7 @@ glm::mat4 Camera::SetProjection(CameraType type, int windowWidth, int windowHeig
 	switch (type)
 	{
 		case CameraType::ORTHGRAPHIC:
-			return glm::ortho(0.0f, (float)windowWidth, 0.0f, (float)windowHeight, nearPlaneDist, farPlaneDist);
+			return glm::ortho(0.0f, (float)windowWidth, 0.0f, (float)windowHeight);
 			break;
 		case CameraType::PERSPECTIVE:
 			return glm::perspective(glm::radians(_fov), (float)windowWidth / (float)windowHeight, nearPlaneDist, farPlaneDist);

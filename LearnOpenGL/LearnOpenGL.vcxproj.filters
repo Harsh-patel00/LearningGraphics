@@ -25,6 +25,9 @@
     <ClCompile Include="Model.cpp">
       <Filter>Source\Helper Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>Source\Helper Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -46,6 +49,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Font.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\VertexShader.vert">
@@ -58,7 +64,6 @@
       <Filter>Shaders\Light</Filter>
     </None>
     <None Include="ClassDiagram.cd" />
-    <None Include="Shaders\BorderFrag.frag" />
     <None Include="Shaders\SimpleFrag.frag">
       <Filter>Shaders</Filter>
     </None>
@@ -71,8 +76,17 @@
     <None Include="Shaders\FSDiscard.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="Shaders\SimpleVert2.vert" />
-    <None Include="Shaders\SimpleFrag2.frag" />
+    <None Include="Shaders\BorderFrag.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\SimpleFrag2.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\SimpleVert2.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\VSFont.vert" />
+    <None Include="Shaders\FSFont.frag" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Headers">

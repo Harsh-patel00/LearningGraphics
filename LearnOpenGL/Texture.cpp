@@ -2,6 +2,8 @@
 
 int Texture::_textureCount = 0;
 
+Texture::Texture(){}
+
 Texture::Texture(const char* imgPath, GLint wrapSType, GLint wrapTType, GLint filtMinType, GLint filtMagType)
 {
 	glGenTextures(1, &ID);
@@ -70,6 +72,27 @@ Texture::Texture(GLuint width, GLuint height, GLint filtMinType, GLint filtMagTy
 
 	std::cout << "LOG::TEXTURE::NUMBER : " << textureNumber << std::endl;
 	std::cout << "LOG::TEXTURE::CHANNELS : " << 3 << std::endl;
+	std::cout << "LOG::TEXTURE::COUNT : " << _textureCount << std::endl;
+	std::cout << "===================================" << std::endl;
+}
+
+void Texture::CreateFontTexture(GLuint width, GLuint height, GLint wrapSType, GLint wrapTType, GLint filtMinType, GLint filtMagType, const void* data)
+{
+	glGenTextures(1, &ID);
+	glBindTexture(GL_TEXTURE_2D, ID);
+
+	glTexImage2D(GL_TEXTURE_2D,	0, GL_RED, width, height, 0, GL_RED, GL_UNSIGNED_BYTE, data);
+	// set texture options
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapSType);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapTType);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filtMinType);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filtMagType);
+
+	textureNumber = _textureCount;
+	_textureCount++;
+
+	std::cout << "LOG::TEXTURE::NUMBER : " << textureNumber << std::endl;
+	std::cout << "LOG::TEXTURE::CHANNELS : " << 1 << std::endl;
 	std::cout << "LOG::TEXTURE::COUNT : " << _textureCount << std::endl;
 	std::cout << "===================================" << std::endl;
 }
