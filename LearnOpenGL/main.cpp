@@ -31,6 +31,8 @@ float mixValue = 0.4f;
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
+auto maxFPS = -INT16_MAX;
+auto minFPS = INT16_MAX;
 
 #pragma endregion
 
@@ -626,7 +628,12 @@ int main()
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f); // Use this color when clearing color buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear the color buffer, z-buffer and stencil buffer
 
-		std::string fps = "FPS : " + std::to_string( (int)(1 / deltaTime));
+		int fps = (int)(1 / deltaTime);
+
+		if (fps > maxFPS) { maxFPS = fps; }
+		if (fps < minFPS) { minFPS = fps; }
+
+		std::string fps_str = "FPS : " + std::to_string(fps);
 
 
 		// To render the output in wireframe mode, uncomment the below line
@@ -638,25 +645,10 @@ int main()
 
 		// Set the view matrix (Need to set this every frame as we are moving the camera around)
 		glm::mat4 view;
+		view = ourCamera.LookAt();
 
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(0.f));
-
-		view = glm::mat4(glm::mat3(ourCamera.LookAt()));
-
-		glDepthMask(GL_FALSE);
-		cubemapShader.Use();
-		// ... set view and projection matrix
-		cubemapShader.SetMatrixUniform4f("view", glm::value_ptr(view));
-		cubemapShader.SetMatrixUniform4f("projection", glm::value_ptr(projection));
-
-		glBindVertexArray(skyboxVAO);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-		glDepthMask(GL_TRUE);
-
-		view = glm::mat4(1.0f);
-		view = ourCamera.LookAt();
 
 		#pragma region Cubes
 
@@ -687,7 +679,7 @@ int main()
 
 		#pragma endregion
 
-		// glBindVertexArray(0);
+		glBindVertexArray(0);
 
 		#pragma region DefaultFramebuffer
 
@@ -754,9 +746,30 @@ int main()
 
 		#pragma endregion
 
+		#pragma region Cubemap/Skyox
+
+		glDepthFunc(GL_LEQUAL);
+		cubemapShader.Use();
+
+		view = glm::mat4(1.0f);
+		view = glm::mat4(glm::mat3(ourCamera.LookAt()));
+		// ... set view and projection matrix
+		cubemapShader.SetMatrixUniform4f("view", glm::value_ptr(view));
+		cubemapShader.SetMatrixUniform4f("projection", glm::value_ptr(projection));
+
+		glBindVertexArray(skyboxVAO);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glDepthFunc(GL_LESS); // set depth function back to default
+
+		glBindVertexArray(0);
+		
+		#pragma endregion
+
 		glBindVertexArray(fontVAO);
 
-		RenderText(shader, fps, 0.0f, 580.0f, .5f, glm::vec3(1.0, 0.8f, 0.2f));
+		RenderText(shader, fps_str, 0.0f, 580.0f, .5f, glm::vec3(1.0, 0.8f, 0.2f));
 
 		// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		
@@ -767,6 +780,8 @@ int main()
 		glfwSwapBuffers(window); // swap the color buffer
 	}
 
+	std::cout << "Max FPS : " << maxFPS << std::endl;
+	std::cout << "Min FPS : " << minFPS << std::endl;
 	std::cout << "Window is closed!" << std::endl;
 	glfwTerminate(); // Clear all allocated resources
 	return 0;
