@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include <string>
+#include <sstream>
 
 
 #define RED   "\x1B[31m"
@@ -21,4 +21,6 @@ public:
 	void static SUCCESS(const std::string&);
 	void static LOGERROR(const std::string&);
 	void static WARNING(const std::string&);
+
+	
 };

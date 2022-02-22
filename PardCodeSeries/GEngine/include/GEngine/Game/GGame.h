@@ -19,19 +19,20 @@ protected:
 	std::unique_ptr<GWindow> _display;
 
 	GVertexArrayObjectPtr _triangleVAO{};
+	GShaderProgramPtr _triangleShader{};
 
 public:
-	GGame();
-	~GGame();
+	GGame();	// Def in GGame
+	~GGame();	// Def in GGame
 
 public:
 
-	virtual void OnCreate();
-	virtual void OnUpdate();
-	virtual void OnQuit();
+	virtual void OnCreate();	// Def in GGame
+	virtual void OnUpdate();	// Def in GGame
+	virtual void OnQuit();		// Def in GGame
 
-	void Run();
-	void Quit();
+	void Run();		// Def in CWin32Game
+	void Quit();	// Def in GGame
 
 };
 

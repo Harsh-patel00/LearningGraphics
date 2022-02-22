@@ -48,6 +48,9 @@
     <ClCompile Include="GEngine\src\GEngine\Graphics\GVertexArrayObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GEngine\src\GEngine\Graphics\GShaderProgram.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GEngine\include\GEngine\Window\GWindow.h">
@@ -83,9 +86,14 @@
     <ClInclude Include="GEngine\include\GEngine\Graphics\GVertexArrayObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GEngine\include\GEngine\Graphics\GShaderProgram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
     <None Include="cpp.hint" />
+    <None Include="Shaders\Vertex\triangleVert.vert" />
+    <None Include="Shaders\Fragment\triangleFrag.frag" />
   </ItemGroup>
 </Project>

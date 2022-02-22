@@ -5,7 +5,7 @@
 class GVertexArrayObject
 {
 public: // Constructor/Destructor
-	GVertexArrayObject(const GVertexBufferData&);
+	GVertexArrayObject(const GVertexBufferDesc&);
 	~GVertexArrayObject();
 
 public: // Member functions
@@ -16,6 +16,6 @@ public: // Member functions
 private: // Member variables
 	ui32 _vertexBufferId{};
 	ui32 _vertexArrayObjectId{};
-	GVertexBufferData _vertexBufferData;
+	GVertexBufferDesc _vertexBufferData;
 };
 

@@ -1,21 +1,30 @@
 #include <glad/glad.h>
 
 #include "GEngine\Graphics\GVertexArrayObject.h"
+#include "GEngine\Console\GConsole.h"
 
 
-GVertexArrayObject::GVertexArrayObject(const GVertexBufferData& data)
+GVertexArrayObject::GVertexArrayObject(const GVertexBufferDesc& data)
 {
-	glGenBuffers(1, &_vertexBufferId);
-	
+	if (!data.listSize) GConsole::LOGERROR("GVertxArrayObject::listSize is NULL");
+	if (!data.vertexSize) GConsole::LOGERROR("GVertxArrayObject::vertexSize is NULL");
+	if (!data.verticesList) GConsole::LOGERROR("GVertxArrayObject::vertexList is NULL");
+
 
 	glGenVertexArrays(1, &_vertexArrayObjectId);
 	glBindVertexArray(_vertexArrayObjectId);
 
+	glGenBuffers(1, &_vertexBufferId);
 	glBindBuffer(GL_ARRAY_BUFFER, _vertexBufferId);
 	glBufferData(GL_ARRAY_BUFFER, data.vertexSize * data.listSize, data.verticesList, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, data.vertexSize, 0);
-	glEnableVertexAttribArray(0);
+	for (ui32 i = 0; i < data.attributesListSize; i++)
+	{
+		glVertexAttribPointer(i, data.attributesList[i].numElements, GL_FLOAT, 
+			GL_FALSE, data.vertexSize, (void*)((i==0) ? 0 : data.attributesList[i-1].numElements * sizeof(f32)));
+		glEnableVertexAttribArray(i);
+	}
+
 
 	glBindVertexArray(0);
 

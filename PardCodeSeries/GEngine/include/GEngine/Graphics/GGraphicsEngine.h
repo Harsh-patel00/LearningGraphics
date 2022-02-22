@@ -5,16 +5,18 @@
 class GGraphicsEngine
 {
 public: // Constructor/Destructor
-	GGraphicsEngine();
-	~GGraphicsEngine();
+	GGraphicsEngine();		// Def in CWin32GraphicsEngine
+	~GGraphicsEngine();		// Def in CWin32GraphicsEngine
 
 public: // Member functions (Helpers)
-	GVertexArrayObjectPtr CreateVertexArrayObject(const GVertexBufferData&);
+	GVertexArrayObjectPtr CreateVertexArrayObject(const GVertexBufferDesc&);	// Def in GGraphicsEngine
+	GShaderProgramPtr CreateShader(const GShaderProgramDesc& desc);					// Def in GGraphicsEngine
 
 public: // Member functions for OpenGL
-	void Clear(const GVec4 &color);
-	void SetViewport(const GRect& size);
-	void SetVertexArrayObj(const GVertexArrayObjectPtr& vao);
-	void DrawTriangle(ui32 vertexCount, ui32 offset);
+	void Clear(const GVec4 &color);								// Def in GGraphicsEngine
+	void SetViewport(const GRect& size);						// Def in GGraphicsEngine
+	void SetVertexArrayObj(const GVertexArrayObjectPtr& vao);	// Def in GGraphicsEngine
+	void SetShader(const GShaderProgramPtr& shader);	// Def in GGraphicsEngine
+	void DrawTriangle(ui32 vertexCount, ui32 offset);			// Def in GGraphicsEngine
 };
 

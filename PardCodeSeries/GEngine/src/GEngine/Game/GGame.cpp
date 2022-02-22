@@ -29,26 +29,48 @@ void GGame::OnCreate()
 	{
 		// Top
 		0.f, 0.5f, 0.f,
+		0, 0, 1, // Green
 
 		// Bottom-Left
 		-0.5f, -0.5f, 0.f,
+		1, 0, 0, // Red
 
 		// Bottom-Right
-		0.5f, -0.5f, 0.f
+		0.5f, -0.5f, 0.f,
+		0, 1, 0 // Blue
+
 	};
 
-	_triangleVAO = _graphicsEngine->CreateVertexArrayObject({(void*)triangleVertices, sizeof(f32)*3, 3});
+	GVertexAttribute attribsList[]
+	{
+		3,	// Position
+		3	// Color
+	};
+
+	_triangleVAO = _graphicsEngine->CreateVertexArrayObject(
+		{
+			(void*)triangleVertices, 
+			sizeof(f32)*(3+3),
+			3, 
+			attribsList, 
+			2
+		});
+
+	_triangleShader = _graphicsEngine->CreateShader({ L"Shaders/Vertex/triangleVert.vert", 
+		L"Shaders/Fragment/triangleFrag.frag"});
 }
 
 void GGame::OnUpdate()
 {
-	_graphicsEngine->Clear(GVec4(0, 0, 1, 1));
+	_graphicsEngine->Clear(GVec4(0.2, 0.2, 0.2, 1));
 
 	_graphicsEngine->SetVertexArrayObj(_triangleVAO);
 
+	_graphicsEngine->SetShader(_triangleShader);
+
 	_graphicsEngine->DrawTriangle(_triangleVAO->GetVertexBufferSize(), 0);
 
-	// Always at end
+	// Always at end (Double buffering)
 	_display->Present(false);
 }
 
